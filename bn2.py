@@ -5,7 +5,9 @@ from colorama import Fore, Style
 import socket
 
 class BotNik:
-  def download(file_url=input('Enter Full File URL:\t')):
+  def download():
+    file_url=input('Enter Full File URL:\t')
+    print(Fore.WHITE + '━'*115)
     file_name = file_url.split('/')[-1]   
     r = requests.get(file_url, stream = True) 
       
@@ -14,6 +16,27 @@ class BotNik:
         # writing one chunk at a time to pdf file 
         if chunk: 
           file.write(chunk)
+
+  def explore():
+    interesting = input('Enter file extension to search for:\t')
+    t = time.process_time()
+    base = input('enter base URL:\t')
+    links = BotNik.get_links(base)
+    while len(links) > 0:
+      if len(links) > 1:
+        link = random.choice(links)
+        if link.endswith(interesting):
+          BotNik.download(link)
+        elif link.endswith('.html') or link.endswith('.htm') or not '.' in link.split('/')[-1]:
+          nlinks = BotNik.get_links(link)
+          for ll in nlinks:
+            links.append(ll)
+        else:
+            continue
+      else:
+        BotNik.download(links[0])
+      t = time.process() - t
+      print(t)
 
   def get_links(archive_url): 
         
@@ -43,7 +66,7 @@ class BotNik:
       r = requests.get('https://api.hackertarget.com/httpheaders/?q=' + domain).text
       return r
   def dnsLookup(domain='hackthissite.org'):
-      r = get('http://api.hackertarget.com/dnslookup/?q=' + domain).text
+      r = requests.get('http://api.hackertarget.com/dnslookup/?q=' + domain).text
       return r
   def censys(ip='1.1.1.1'):
       dirty_response = requests.get('https://censys.io/ipv4/%s/raw' % ip).text
@@ -51,26 +74,8 @@ class BotNik:
       response = clean_response.split('<code class="json">')[1].split('</code>')[0]
       return response + '\n'
   def whois(domain='1.1.1.1'):
-      r = get('http://api.hackertarget.com/whois/?q=' + domain).text
+      r = requests.get('http://api.hackertarget.com/whois/?q=' + domain).text
       return r
-  def explore(interesting=input('Enter file extension to search for:\t'), base=input('enter base URL:\t')):
-    t = time.process_time()
-    links = BotNik.get_links(base)
-    while len(links) > 0:
-      if len(links) > 1:
-        link = random.choice(links)
-        if link.endswith(interesting):
-          BotNik.download(link)
-        elif link.endswith('.html') or link.endswith('.htm') or not '.' in link.split('/')[-1]:
-          nlinks = BotNik.get_links(link)
-          for ll in nlinks:
-            links.append(ll)
-        else:
-            continue
-      else:
-        BotNik.download(links[0])
-      t = time.process() - t
-      print(t)
 
 class core: 
     end = Fore.WHITE 
@@ -118,7 +123,7 @@ class core:
     def __copyright__():
       print(core.info, '(c) RaidTheWeb 2020, MIT Licensed.')
     def __version__():
-      print(core.info, 'BotNik 2.7 on', core.plat)
+      print(core.info, 'BotNik 2.8 on', core.plat)
     def console():
       core.logo()
       core.__copyright__()
@@ -126,33 +131,60 @@ class core:
       print(Fore.WHITE + '━'*115)
       core.menu()
       print(Fore.WHITE + '━'*115)
-      ex = input(core.end + 'BN2@' + Fore.GREEN + core.host + ' ~ ' + core.end + '# ')
-      core.check(ex)
-    def check(ex):
-      if ex == '1':
-        BotNik.download()
-      elif ex == '2':
-        BotNik.explore()
-      elif ex == '3':
-        print(BotNik.get_links(input('Enter Full Full URL:\t'))
-      elif ex == '4':
-        print(BotNik.trakr(ip=input('Enter Target IP:\t')))
-      elif ex == '5':
-        print(BotNik.ping(ip=input('Enter Target IP:\t')))
-      elif ex == '6':
-        print(BotNik.nmap(ip=input('Enter Target IP:\t')))
-      elif ex == '7':
-        print(BotNik.headers(domain=input('Enter Target Domain:\t')))
-      elif ex == '8':
-        print(BotNik.dnsLookup(domain=input('Enter Target Domain:\t')))
-      elif ex == '9':
-        print(BotNik.censys(ip=input('Enter Target IP:\t')))
-      elif ex == '10':
-        print(BotNik.whois(domain=input('Enter Target Domain:\t')))
-      elif ex == '11':
-        os.system('clear')
-        core.logo()
+      while True:
+        ex = input(core.end + 'BN2@' + core.host + ' ~ # ')
+        if ex == '1':
+          print(Fore.WHITE + '━'*115)
+          print(BotNik.download())
+        if ex == '2':
+          print(Fore.WHITE + '━'*115)
+          BotNik.explore()
+        if ex == '3':
+          print(Fore.WHITE + '━'*115)
+          url = input('Target URL:\t')
+          print(Fore.WHITE + '━'*115)
+          links = BotNik.get_links(url)
+          for link in links:
+            print(link)
+        if ex == '4':
+          print(Fore.WHITE + '━'*115)
+          ip = input('Enter Target IP:\t')
+          print(Fore.WHITE + '━'*115)
+          print(BotNik.trakr(ip))
+        if ex == '5':
+          print(Fore.WHITE + '━'*115)
+          ip = input('Target IP:\t')
+          print(BotNik.ping(ip))
+        if ex == '6':
+          print(Fore.WHITE + '━'*115)
+          ip = input('Enter Target IP:\t')
+          print(BotNik.nmap(ip))
+        if ex == '7':
+          print(Fore.WHITE + '━'*115)
+          domain = input('Enter Target Domain:\t')
+          print(BotNik.headers(domain))
+        if ex == '8':
+          print(Fore.WHITE + '━'*115)
+          domain = input('Enter Target Domain:\t')
+          print(BotNik.dnsLookup(domain))
+        if ex == '9':
+          print(Fore.WHITE + '━'*115)
+          op = input('Enter I for IP or D for Domain:\t')
+          if op.lower().startswith('i'):
+            ip = input('Enter Target IP:\t')
+            with open(ip + '-BotNik-2.8', 'w') as f:
+              f.write(BotNik.censys(ip))
+              f.close()
+            print(core.info, 'Saved Output To', ip + '-BotNik-2.8')
+          elif op.lower().startswith('d'):
+            rm = input('Enter Target Domain:\t')
+            ip = socket.gethostbyname(rm)
+            with open(rm + '-BotNik-2.8', 'w') as f:
+              f.write(BotNik.censys(ip))
+              f.close()
+            print(core.info, 'Saved Output To', rm + '-BotNik-2.8')
+          else:
+            print(core.bad, 'Unrecognized Input!')
+        print(Fore.WHITE + '━'*115)
         core.menu()
         print(Fore.WHITE + '━'*115)
-      else:
-        print(core.bad, 'Error: Command Not Recognised.')
