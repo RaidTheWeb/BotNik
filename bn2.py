@@ -2,7 +2,6 @@ import requests, sys, html5lib, os, random, time, platform, socket
 from datetime import datetime
 from bs4 import BeautifulSoup
 from colorama import Fore, Style
-import socket
 
 class BotNik:
   def download():
@@ -117,7 +116,7 @@ class core:
        .omMMMmy/-.`-sdNNMMNNmy/``.:sdNMMmy:`     .mmmmmmmmds:   :ymmmmds-  .hmmm.hmd      +mmh  mms :mm:  -dmd-    
          `:smNMMMmhyo+oossso+oshdNMMMmh+.         ```````         `...       ``` ```       ```  ```  ``     ```    
             `-+ydmNMMMMMMMMMMMMNNmho:.                                                                             
-                `.-:/+ossssoo+/-.`                                                                 v2.8               
+                `.-:/+ossssoo+/-.`                                                                 v2.7                
 ''')
       print(Fore.WHITE + '━'*115)
     def __copyright__():
@@ -125,6 +124,7 @@ class core:
     def __version__():
       print(core.info, 'BotNik 2.8 on', core.plat)
     def console():
+      os.system('clear')
       core.logo()
       core.__copyright__()
       core.__version__()
@@ -132,43 +132,43 @@ class core:
       core.menu()
       print(Fore.WHITE + '━'*115)
       while True:
-        ex = input(core.end + 'BN2@' + core.host + ' ~ # ')
+        ex = input(core.end + 'BN2@' + core.green + core.host + core.end + ' ~ # ')
+        print(Fore.WHITE + '━'*115)
         if ex == '1':
-          print(Fore.WHITE + '━'*115)
           print(BotNik.download())
+          print(Fore.WHITE + '━'*115)
         if ex == '2':
-          print(Fore.WHITE + '━'*115)
           BotNik.explore()
-        if ex == '3':
           print(Fore.WHITE + '━'*115)
+        if ex == '3':
           url = input('Target URL:\t')
           print(Fore.WHITE + '━'*115)
           links = BotNik.get_links(url)
           for link in links:
             print(link)
-        if ex == '4':
           print(Fore.WHITE + '━'*115)
+        if ex == '4':
           ip = input('Enter Target IP:\t')
           print(Fore.WHITE + '━'*115)
           print(BotNik.trakr(ip))
-        if ex == '5':
           print(Fore.WHITE + '━'*115)
+        if ex == '5':
           ip = input('Target IP:\t')
           print(BotNik.ping(ip))
-        if ex == '6':
           print(Fore.WHITE + '━'*115)
+        if ex == '6':
           ip = input('Enter Target IP:\t')
           print(BotNik.nmap(ip))
-        if ex == '7':
           print(Fore.WHITE + '━'*115)
+        if ex == '7':
           domain = input('Enter Target Domain:\t')
           print(BotNik.headers(domain))
-        if ex == '8':
           print(Fore.WHITE + '━'*115)
+        if ex == '8':
           domain = input('Enter Target Domain:\t')
           print(BotNik.dnsLookup(domain))
-        if ex == '9':
           print(Fore.WHITE + '━'*115)
+        if ex == '9':
           op = input('Enter I for IP or D for Domain:\t')
           if op.lower().startswith('i'):
             ip = input('Enter Target IP:\t')
@@ -185,6 +185,16 @@ class core:
             print(core.info, 'Saved Output To', rm + '-BotNik-2.8')
           else:
             print(core.bad, 'Unrecognized Input!')
-        print(Fore.WHITE + '━'*115)
+          print(Fore.WHITE + '━'*115)
+        if ex == '10':
+          domain = input('Enter Target Domain:\t')
+          print(BotNik.whois(domain))
+          print(Fore.WHITE + '━'*115)
+        if ex == '11':
+          os.system('clear')
+          core.logo()
+        if ex not in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']:
+          print(core.bad, 'Unrecognized Command!')
+          print(Fore.WHITE + '━'*115)
         core.menu()
         print(Fore.WHITE + '━'*115)
