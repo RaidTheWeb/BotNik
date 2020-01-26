@@ -117,7 +117,7 @@ class core:
        .omMMMmy/-.`-sdNNMMNNmy/``.:sdNMMmy:`     .mmmmmmmmds:   :ymmmmds-  .hmmm.hmd      +mmh  mms :mm:  -dmd-    
          `:smNMMMmhyo+oossso+oshdNMMMmh+.         ```````         `...       ``` ```       ```  ```  ``     ```    
             `-+ydmNMMMMMMMMMMMMNNmho:.                                                                             
-                `.-:/+ossssoo+/-.`                                                                 v2.7                
+                `.-:/+ossssoo+/-.`                                                                 v2.8               
 ''')
       print(Fore.WHITE + '━'*115)
     def __copyright__():
